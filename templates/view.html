@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Data</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; }
+        table {
+            width: 70%;
+            margin: 50px auto;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th { background: #007BFF; color: white; }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Stored User Data</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Country</th>
+    </tr>
+
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.country }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
+
