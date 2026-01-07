@@ -3,7 +3,9 @@ import mysql.connector
 
 app = Flask(__name__)
 
+# -------------------------------
 # MariaDB Connection
+# -------------------------------
 db = mysql.connector.connect(
     host="localhost",
     user="flaskuser",
@@ -11,9 +13,11 @@ db = mysql.connector.connect(
     database="flask_app"
 )
 
-
 cursor = db.cursor(dictionary=True)
 
+# -------------------------------
+# Home Page (Form Page)
+# -------------------------------
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -25,18 +29,29 @@ def index():
         cursor.execute(query, (name, email, country))
         db.commit()
 
-        return redirect(url_for('view_data'))
+        # ✅ Redirect to THANK YOU page
+        return redirect(url_for('thank_you'))
 
     return render_template('index.html')
 
+# -------------------------------
+# Thank You Page
+# -------------------------------
+@app.route('/thank-you')
+def thank_you():
+    return render_template('thankyou.html')
 
+# -------------------------------
+# Optional: View Data Page
+# -------------------------------
 @app.route('/view')
 def view_data():
     cursor.execute("SELECT * FROM users")
     data = cursor.fetchall()
     return render_template('view.html', users=data)
 
-
+# -------------------------------
+# Run App
+# -------------------------------
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
+    app.run(debug=True)
